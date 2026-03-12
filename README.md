@@ -1,73 +1,55 @@
-# Welcome to your Lovable project
+#  Gratitude Garden
 
-## Project info
+Gratitude Garden is a calming web app that encourages daily reflection by turning gratitude entries into a growing virtual garden. Each day a user writes something they are grateful for, a new seed is planted in the garden, visually representing their gratitude journey over time.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+##  Features
 
-## How can I edit this code?
+- **Daily Gratitude Entry**
+  - Users can write one gratitude entry per day.
+  - The app displays the current date for each entry.
 
-There are several ways of editing your application.
+- **Garden Visualization**
+  - Each entry plants a seed in the garden.
+  - The garden grows as more entries are added.
 
-**Use Lovable**
+- **Entry History**
+  - Displays previous gratitude entries with dates.
+  - Users can revisit past reflections.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+- **Growth Animation**
+  - When a user plants a seed, a simple animation shows the seed appearing in the garden.
 
-Changes made via Lovable will be committed automatically to this repo.
+- **Local Storage**
+  - Entries are saved in the browser using `localStorage` so data persists after refreshing the page.
 
-**Use your preferred IDE**
+##  Tech Stack
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- **React**
+- **Vite**
+- **Tailwind CSS**
+- **LocalStorage API**
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+##  How It Works
 
-Follow these steps:
+1. The user writes one gratitude entry for the day.
+2. When they click **Plant Seed**, the entry is saved.
+3. A seed icon appears in the garden.
+4. As more entries are written, the garden continues to grow.
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+##  Future Improvements
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+- Plant growth stages (seed → sprout → flower)
+- Gratitude streak tracker
+- Seasonal garden themes
+- Ability to edit past entries
+- Cloud database support (Firebase or Supabase)
 
-# Step 3: Install the necessary dependencies.
-npm i
+##  Purpose
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+This project combines **mindfulness and visual motivation** by transforming daily gratitude into a living digital garden. It is designed to promote positive habits while providing a simple and relaxing user experience.
 
-**Edit a file directly in GitHub**
+## License
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+MIT
 
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Developed by Richelle Adarlo <3
