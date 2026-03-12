@@ -1,5 +1,7 @@
 #  Gratitude Garden
 
+![Gratitude Garden thumbnail](public/thumbnail.png)
+
 Gratitude Garden is a calming web app that encourages daily reflection by turning gratitude entries into a growing virtual garden. Each day a user writes something they are grateful for, a new seed is planted in the garden, visually representing their gratitude journey over time.
 
 ##  Features
