@@ -3,9 +3,16 @@ import { useState } from 'react';
 interface GratitudeInputProps {
   addEntry: (text: string) => void;
   hasPostedToday: boolean;
+  deleteTodayEntry: () => void;
+  isDeletingToday: boolean;
 }
 
-const GratitudeInput = ({ addEntry, hasPostedToday }: GratitudeInputProps) => {
+const GratitudeInput = ({
+  addEntry,
+  hasPostedToday,
+  deleteTodayEntry,
+  isDeletingToday,
+}: GratitudeInputProps) => {
   const [text, setText] = useState('');
 
   // Format today's date in a friendly way
@@ -27,7 +34,7 @@ const GratitudeInput = ({ addEntry, hasPostedToday }: GratitudeInputProps) => {
   return (
     <div className="glass-panel p-4 sm:p-6 rounded-xl">
       {/* Display today's date */}
-      <p className="text-sm text-muted-foreground mb-2">{today}</p>
+      <p className="text-sm text-white font-bold mb-2">{today}</p>
       <form onSubmit={handleSubmit}>
         {/* Gratitude text area */}
         <textarea
@@ -50,6 +57,17 @@ const GratitudeInput = ({ addEntry, hasPostedToday }: GratitudeInputProps) => {
         >
           🌱 Plant Gratitude
         </button>
+
+        {hasPostedToday && (
+          <button
+            type="button"
+            onClick={deleteTodayEntry}
+            disabled={isDeletingToday}
+            className="mt-3 w-full sm:w-auto h-10 px-6 inline-flex items-center justify-center rounded-full glass-panel text-foreground font-semibold hover:glass-panel-hover transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
+          >
+            {isDeletingToday ? 'Removing today\'s entry...' : 'Delete today\'s entry and try again'}
+          </button>
+        )}
       </form>
     </div>
   );

@@ -24,7 +24,7 @@ const Index = () => {
   // Track which entry is highlighted (from history hover/click)
   const [highlightedEntryId, setHighlightedEntryId] = useState<number | null>(null);
 
-  const playSound = usePlantSound();
+  const { playPlantSound, playDeleteSound } = usePlantSound();
 
   // Persist entries to LocalStorage on change
   useEffect(() => {
@@ -33,6 +33,8 @@ const Index = () => {
 
   // Add a new gratitude entry
   const [newestEntryId, setNewestEntryId] = useState<number | null>(null);
+  const [removingEntryId, setRemovingEntryId] = useState<number | null>(null);
+  const [isDeletingToday, setIsDeletingToday] = useState(false);
 
   const addEntry = (text: string) => {
     const newEntry: GratitudeEntry = {
@@ -42,13 +44,42 @@ const Index = () => {
     };
     setEntries((prev) => [...prev, newEntry]);
     setNewestEntryId(newEntry.id);
-    playSound();
+    playPlantSound();
   };
 
+  const latestTodayEntry = useMemo(() => {
+    const todayStr = new Date().toDateString();
+    const todays = entries.filter(
+      (entry) => new Date(entry.date).toDateString() === todayStr,
+    );
+    if (todays.length === 0) return null;
+
+    return todays.reduce((latest, current) => {
+      return new Date(current.date).getTime() > new Date(latest.date).getTime()
+        ? current
+        : latest;
+    });
+  }, [entries]);
+
   // Check if user already posted today
-  const hasPostedToday = entries.some((entry) => {
-    return new Date(entry.date).toDateString() === new Date().toDateString();
-  });
+  const hasPostedToday = latestTodayEntry !== null;
+
+  const deleteTodayEntry = () => {
+    if (!latestTodayEntry || isDeletingToday) return;
+
+    const targetId = latestTodayEntry.id;
+    setIsDeletingToday(true);
+    setRemovingEntryId(targetId);
+    setHighlightedEntryId((prev) => (prev === targetId ? null : prev));
+    playDeleteSound();
+
+    window.setTimeout(() => {
+      setEntries((prev) => prev.filter((entry) => entry.id !== targetId));
+      setNewestEntryId((prev) => (prev === targetId ? null : prev));
+      setRemovingEntryId(null);
+      setIsDeletingToday(false);
+    }, 430);
+  };
 
   // Calculate the current streak of consecutive days
   const streak = useMemo(() => {
@@ -113,13 +144,13 @@ const Index = () => {
                 alt="Gratitude Garden"
                 className="w-full max-w-sm h-auto drop-shadow-sm"
               />
-              <p className="text-muted-foreground mt-3 drop-shadow-sm">
+              <p className="mt-3 glass-panel rounded-full px-4 py-2 text-foreground/95 font-medium drop-shadow-sm">
                 A space to cultivate joy, one thought at a time. {seasonEmoji[season]}
               </p>
               {/* Streak counter */}
               {streak > 0 && (
-                <div className="inline-flex items-center gap-2 mt-4 bg-accent/20 text-accent-foreground px-3 py-1.5 rounded-full">
-                  <Flame className="w-4 h-4 text-accent" />
+                <div className="inline-flex items-center gap-2 mt-4 glass-panel px-3 py-1.5 rounded-full text-foreground font-semibold">
+                  <Flame className="w-4 h-4 text-amber-600" />
                   <span className="font-semibold text-sm tabular-nums">
                     {streak} day streak
                   </span>
@@ -128,7 +159,12 @@ const Index = () => {
             </header>
 
             <section>
-              <GratitudeInput addEntry={addEntry} hasPostedToday={hasPostedToday} />
+              <GratitudeInput
+                addEntry={addEntry}
+                hasPostedToday={hasPostedToday}
+                deleteTodayEntry={deleteTodayEntry}
+                isDeletingToday={isDeletingToday}
+              />
             </section>
           </div>
 
@@ -142,6 +178,7 @@ const Index = () => {
                 entries={entries}
                 highlightedEntryId={highlightedEntryId}
                 newestEntryId={newestEntryId}
+                removingEntryId={removingEntryId}
               />
             </section>
 

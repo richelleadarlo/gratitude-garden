@@ -5,13 +5,19 @@ interface GardenProps {
   entries: GratitudeEntry[];
   highlightedEntryId: number | null;
   newestEntryId: number | null;
+  removingEntryId: number | null;
 }
 
 /**
  * Garden component - a 7-column grid representing the user's gratitude history.
  * Each cell is a "plot" that holds a plant. Highlighted entries get an accent ring.
  */
-const Garden = ({ entries, highlightedEntryId, newestEntryId }: GardenProps) => {
+const Garden = ({
+  entries,
+  highlightedEntryId,
+  newestEntryId,
+  removingEntryId,
+}: GardenProps) => {
   return (
     <div className="glass-panel rounded-xl p-4">
       {entries.length > 0 ? (
@@ -25,7 +31,11 @@ const Garden = ({ entries, highlightedEntryId, newestEntryId }: GardenProps) => 
                   : ''
               }`}
             >
-              <Plant entry={entry} isNew={entry.id === newestEntryId} />
+              <Plant
+                entry={entry}
+                isNew={entry.id === newestEntryId}
+                isRemoving={entry.id === removingEntryId}
+              />
             </div>
           ))}
         </div>
