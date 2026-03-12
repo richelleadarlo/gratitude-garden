@@ -59,6 +59,28 @@
 }
 
 @layer utilities {
+  .glass-panel {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.38),
+      rgba(255, 255, 255, 0.16)
+    );
+    border: 1px solid rgba(255, 255, 255, 0.34);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.38),
+      0 10px 30px rgba(20, 45, 30, 0.12),
+      0 1px 2px rgba(20, 45, 30, 0.1);
+    backdrop-filter: blur(14px) saturate(130%);
+    -webkit-backdrop-filter: blur(14px) saturate(130%);
+  }
+
+  .glass-panel-hover {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.4),
+      0 14px 36px rgba(20, 45, 30, 0.16),
+      0 2px 4px rgba(20, 45, 30, 0.12);
+  }
+
   .shadow-surface {
     box-shadow: 0 0 0 1px rgba(0,0,0,0.05), 0 1px 2px 0 rgba(0,0,0,0.08);
   }

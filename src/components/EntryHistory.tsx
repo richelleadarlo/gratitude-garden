@@ -20,7 +20,7 @@ const EntryHistory = ({ entries, onEntryHover }: EntryHistoryProps) => {
             key={entry.id}
             onMouseEnter={() => onEntryHover(entry.id)}
             onClick={() => onEntryHover(entry.id)}
-            className="bg-card p-4 rounded-xl shadow-surface cursor-default hover:shadow-surface-hover transition-shadow duration-200"
+            className="glass-panel p-4 rounded-xl cursor-default transition-shadow duration-200 hover:glass-panel-hover"
           >
             <p className="text-sm font-semibold text-muted-foreground mb-1">
               {new Date(entry.date).toLocaleDateString('en-US', {
@@ -33,7 +33,7 @@ const EntryHistory = ({ entries, onEntryHover }: EntryHistoryProps) => {
           </div>
         ))
       ) : (
-        <div className="text-center text-muted-foreground py-8 bg-card rounded-xl shadow-surface">
+        <div className="text-center text-muted-foreground py-8 glass-panel rounded-xl">
           Your past entries will appear here.
         </div>
       )}

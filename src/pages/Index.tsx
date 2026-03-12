@@ -32,6 +32,8 @@ const Index = () => {
   }, [entries]);
 
   // Add a new gratitude entry
+  const [newestEntryId, setNewestEntryId] = useState<number | null>(null);
+
   const addEntry = (text: string) => {
     const newEntry: GratitudeEntry = {
       id: Date.now(),
@@ -39,6 +41,7 @@ const Index = () => {
       date: new Date().toISOString(),
     };
     setEntries((prev) => [...prev, newEntry]);
+    setNewestEntryId(newEntry.id);
     playSound();
   };
 
@@ -95,48 +98,71 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-svh">
-      <main className="max-w-3xl mx-auto px-4 py-8 sm:py-12 space-y-10">
-        {/* Header */}
-        <header className="text-center">
-          <h1 className="text-4xl font-semibold tracking-tight text-foreground">
-            Gratitude Garden
-          </h1>
-          <p className="text-muted-foreground mt-2">
-            A space to cultivate joy, one thought at a time. {seasonEmoji[season]}
-          </p>
-          {/* Streak counter */}
-          {streak > 0 && (
-            <div className="inline-flex items-center gap-2 mt-4 bg-accent/20 text-accent-foreground px-3 py-1.5 rounded-full">
-              <Flame className="w-4 h-4 text-accent" />
-              <span className="font-semibold text-sm tabular-nums">
-                {streak} day streak
-              </span>
-            </div>
-          )}
-        </header>
+    <div
+      className="min-h-svh bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: "url('/bg.jpg')" }}
+    >
+      <main className="max-w-7xl mx-auto px-4 py-8 sm:py-12 pb-24">
+        {/* Two-column grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+          {/* Left column: Title + subtitle + input */}
+          <div className="space-y-6">
+            <header className="text-center flex flex-col items-center">
+              <img
+                src="/title.png"
+                alt="Gratitude Garden"
+                className="w-full max-w-sm h-auto drop-shadow-sm"
+              />
+              <p className="text-muted-foreground mt-3 drop-shadow-sm">
+                A space to cultivate joy, one thought at a time. {seasonEmoji[season]}
+              </p>
+              {/* Streak counter */}
+              {streak > 0 && (
+                <div className="inline-flex items-center gap-2 mt-4 bg-accent/20 text-accent-foreground px-3 py-1.5 rounded-full">
+                  <Flame className="w-4 h-4 text-accent" />
+                  <span className="font-semibold text-sm tabular-nums">
+                    {streak} day streak
+                  </span>
+                </div>
+              )}
+            </header>
 
-        {/* Gratitude input form */}
-        <section>
-          <GratitudeInput addEntry={addEntry} hasPostedToday={hasPostedToday} />
-        </section>
+            <section>
+              <GratitudeInput addEntry={addEntry} hasPostedToday={hasPostedToday} />
+            </section>
+          </div>
 
-        {/* Garden visualization */}
-        <section>
-          <h2 className="text-2xl font-semibold tracking-tight mb-4 text-foreground">
-            Your Garden
-          </h2>
-          <Garden entries={entries} highlightedEntryId={highlightedEntryId} />
-        </section>
+          {/* Right column: Garden + Entry History */}
+          <div className="space-y-8 lg:self-center">
+            <section>
+              <h2 className="text-2xl font-semibold tracking-tight mb-4 text-foreground drop-shadow-sm">
+                Your Garden
+              </h2>
+              <Garden
+                entries={entries}
+                highlightedEntryId={highlightedEntryId}
+                newestEntryId={newestEntryId}
+              />
+            </section>
 
-        {/* Entry history */}
-        <section>
-          <h2 className="text-2xl font-semibold tracking-tight mb-4 text-foreground">
-            Entry History
-          </h2>
-          <EntryHistory entries={entries} onEntryHover={setHighlightedEntryId} />
-        </section>
+            <section>
+              <h2 className="text-2xl font-semibold tracking-tight mb-4 text-foreground drop-shadow-sm">
+                Entry History
+              </h2>
+              <EntryHistory entries={entries} onEntryHover={setHighlightedEntryId} />
+            </section>
+          </div>
+        </div>
       </main>
+
+      <footer className="fixed bottom-3 left-1/2 -translate-x-1/2 z-20">
+        <a
+          href="https://richelleadarlo.space/"
+          className="text-xs sm:text-sm text-foreground/80 hover:text-foreground transition-colors glass-panel rounded-full px-3 py-1"
+        >
+          © Richelle Adarlo
+        </a>
+      </footer>
     </div>
   );
 };

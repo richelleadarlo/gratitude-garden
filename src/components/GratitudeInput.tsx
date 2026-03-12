@@ -25,7 +25,7 @@ const GratitudeInput = ({ addEntry, hasPostedToday }: GratitudeInputProps) => {
   };
 
   return (
-    <div className="bg-card p-4 sm:p-6 rounded-xl shadow-surface">
+    <div className="glass-panel p-4 sm:p-6 rounded-xl">
       {/* Display today's date */}
       <p className="text-sm text-muted-foreground mb-2">{today}</p>
       <form onSubmit={handleSubmit}>
